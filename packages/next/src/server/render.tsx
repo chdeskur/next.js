@@ -103,7 +103,7 @@ import { ReflectAdapter } from './web/spec-extension/adapters/reflect'
 import { getCacheControlHeader } from './lib/cache-control'
 import { getErrorSource } from '../shared/lib/error-source'
 import type { DeepReadonly } from '../shared/lib/deep-readonly'
-import type { PagesDevOverlayType } from '../client/components/react-dev-overlay/pages/pages-dev-overlay'
+import type { PagesDevOverlayBridgeType } from '../client/components/react-dev-overlay/pages/pages-dev-overlay-bridge'
 import { getScriptNonceFromHeader } from './app-render/get-script-nonce-from-header'
 
 let tryGetPreviewData: typeof import('./api-utils/node/try-get-preview-data').tryGetPreviewData
@@ -242,7 +242,7 @@ export type RenderOptsPartial = {
   nextExport?: boolean
   dev?: boolean
   ampPath?: string
-  ErrorDebug?: PagesDevOverlayType
+  ErrorDebug?: PagesDevOverlayBridgeType
   ampValidator?: (html: string, pathname: string) => Promise<void>
   ampSkipValidation?: boolean
   ampOptimizerConfig?: { [key: string]: any }
@@ -807,15 +807,7 @@ export async function renderToHTMLImpl(
         <Noop />
         <AppContainer>
           <>
-            {/* <ReactDevOverlay/> */}
-            {dev ? (
-              <>
-                {children}
-                <Noop />
-              </>
-            ) : (
-              children
-            )}
+            {children}
             {/* <RouteAnnouncer/> */}
             <Noop />
           </>
