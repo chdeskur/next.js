@@ -5,8 +5,8 @@ import './app-webpack'
 import { appBootstrap } from './app-bootstrap'
 import { initializeDevBuildIndicatorForAppRouter } from './dev/dev-build-indicator/initialize-for-app-router'
 
-const instrumentationHooks =
-  require('../lib/require-instrumentation-client') as typeof import('../lib/require-instrumentation-client')
+// eslint-disable-next-line @next/internal/typechecked-require
+const instrumentationHooks = require('../lib/require-instrumentation-client')
 
 appBootstrap(() => {
   const { hydrate } = require('./app-index') as typeof import('./app-index')
