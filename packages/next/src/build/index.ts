@@ -772,7 +772,7 @@ async function writeFullyStaticExport(
   configOutDir: string,
   nextBuildSpan: Span
 ): Promise<void> {
-  const exportApp = require('../export')
+  const exportApp = (require('../export') as typeof import('../export'))
     .default as typeof import('../export').default
 
   await exportApp(
@@ -2588,7 +2588,7 @@ export default async function build(
             )
           )
 
-          const exportApp = require('../export')
+          const exportApp = (require('../export') as typeof import('../export'))
             .default as typeof import('../export').default
 
           const exportConfig: NextConfigComplete = {

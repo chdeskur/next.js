@@ -5,10 +5,11 @@ import './app-webpack'
 import { appBootstrap } from './app-bootstrap'
 import { initializeDevBuildIndicatorForAppRouter } from './dev/dev-build-indicator/initialize-for-app-router'
 
-const instrumentationHooks = require('../lib/require-instrumentation-client')
+const instrumentationHooks =
+  require('../lib/require-instrumentation-client') as typeof import('../lib/require-instrumentation-client')
 
 appBootstrap(() => {
-  const { hydrate } = require('./app-index')
+  const { hydrate } = require('./app-index') as typeof import('./app-index')
   hydrate(instrumentationHooks)
   initializeDevBuildIndicatorForAppRouter()
 })
