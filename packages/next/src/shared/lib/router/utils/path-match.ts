@@ -1,6 +1,8 @@
 import type { Key } from 'next/dist/compiled/path-to-regexp'
-import { pathToRegexp } from 'next/dist/compiled/path-to-regexp'
-import { regexpToFunction } from 'next/dist/compiled/path-to-regexp'
+import {
+  safePathToRegexp,
+  safeRegexpToFunction,
+} from '../../../../lib/try-to-parse-path'
 
 interface Options {
   /**
@@ -37,14 +39,14 @@ export type PatchMatcher = (
  */
 export function getPathMatch(path: string, options?: Options): PatchMatcher {
   const keys: Key[] = []
-  const regexp = pathToRegexp(path, keys, {
+  const regexp = safePathToRegexp(path, keys, {
     delimiter: '/',
     sensitive:
       typeof options?.sensitive === 'boolean' ? options.sensitive : false,
     strict: options?.strict,
   })
 
-  const matcher = regexpToFunction<Record<string, any>>(
+  const matcher = safeRegexpToFunction<Record<string, any>>(
     options?.regexModifier
       ? new RegExp(options.regexModifier(regexp.source), regexp.flags)
       : regexp,

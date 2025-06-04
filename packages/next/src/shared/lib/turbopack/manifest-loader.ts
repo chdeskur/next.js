@@ -12,7 +12,6 @@ import type {
 import type { BuildManifest } from '../../../server/get-page-files'
 import type { AppBuildManifest } from '../../../build/webpack/plugins/app-build-manifest-plugin'
 import type { PagesManifest } from '../../../build/webpack/plugins/pages-manifest-plugin'
-import { pathToRegexp } from 'next/dist/compiled/path-to-regexp'
 import type { ActionManifest } from '../../../build/webpack/plugins/flight-client-entry-plugin'
 import type { NextFontManifest } from '../../../build/webpack/plugins/next-font-manifest-plugin'
 import type { REACT_LOADABLE_MANIFEST } from '../constants'
@@ -52,7 +51,10 @@ import {
   addRouteSuffix,
   removeRouteSuffix,
 } from '../../../server/dev/turbopack-utils'
-import { tryToParsePath } from '../../../lib/try-to-parse-path'
+import {
+  tryToParsePath,
+  safePathToRegexp,
+} from '../../../lib/try-to-parse-path'
 import type { Entrypoints } from '../../../build/swc/types'
 
 interface InstrumentationDefinition {
@@ -683,7 +685,7 @@ export class TurbopackManifestLoader {
     )) {
       for (const matcher of fun.matchers) {
         if (!matcher.regexp) {
-          matcher.regexp = pathToRegexp(matcher.originalSource, [], {
+          matcher.regexp = safePathToRegexp(matcher.originalSource, [], {
             delimiter: '/',
             sensitive: false,
             strict: true,
