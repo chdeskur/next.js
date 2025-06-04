@@ -23,7 +23,6 @@ import { addRequestMeta, getRequestMeta } from '../request-meta'
 import { pathHasPrefix } from '../../shared/lib/router/utils/path-has-prefix'
 import { removePathPrefix } from '../../shared/lib/router/utils/remove-path-prefix'
 import setupCompression from 'next/dist/compiled/compression'
-import { NoFallbackError } from '../base-server'
 import { signalFromNodeResponse } from '../web/spec-extension/adapters/next-request'
 import { isPostpone } from './router-utils/is-postpone'
 import { parseUrl as parseUrlUtil } from '../../shared/lib/router/utils/parse-url'
@@ -55,6 +54,7 @@ import {
   RouterServerContextSymbol,
   routerServerGlobal,
 } from './router-utils/router-server-context'
+import { NoFallbackError } from '../../shared/lib/no-fallback-error'
 
 const debug = setupDebug('next:router-server:main')
 const isNextFont = (pathname: string | null) =>

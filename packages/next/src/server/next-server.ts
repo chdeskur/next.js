@@ -58,7 +58,7 @@ import type {
   NextEnabledDirectories,
   BaseRequestHandler,
 } from './base-server'
-import BaseServer, { NoFallbackError } from './base-server'
+import BaseServer from './base-server'
 import { getMaybePagePath, getPagePath } from './require'
 import { denormalizePagePath } from '../shared/lib/page-path/denormalize-page-path'
 import { normalizePagePath } from '../shared/lib/page-path/normalize-page-path'
@@ -114,6 +114,7 @@ import {
   ensureInstrumentationRegistered,
   getInstrumentationModule,
 } from './lib/router-utils/instrumentation-globals.external'
+import { NoFallbackError } from '../shared/lib/no-fallback-error'
 
 export * from './base-server'
 
@@ -493,10 +494,8 @@ export default class NextNodeServer extends BaseServer<
 
   protected async getIncrementalCache({
     requestHeaders,
-    requestProtocol,
   }: {
     requestHeaders: IncrementalCache['requestHeaders']
-    requestProtocol: 'http' | 'https'
   }) {
     const dev = !!this.renderOpts.dev
     let CacheHandler: any
@@ -519,7 +518,6 @@ export default class NextNodeServer extends BaseServer<
       fs: this.getCacheFilesystem(),
       dev,
       requestHeaders,
-      requestProtocol,
       allowedRevalidateHeaderKeys:
         this.nextConfig.experimental.allowedRevalidateHeaderKeys,
       minimalMode: this.minimalMode,
